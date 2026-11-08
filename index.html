@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🐱 Gatos en Adopción</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #fdf6f0;
+      color: #333;
+    }
+
+    /* HEADER */
+    header {
+      background: linear-gradient(135deg, #ff8c69, #ff6347);
+      color: white;
+      text-align: center;
+      padding: 50px 20px 40px;
+    }
+
+    header h1 {
+      font-size: 3rem;
+      margin-bottom: 10px;
+      letter-spacing: 1px;
+    }
+
+    header p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+    }
+
+    /* NAV */
+    nav {
+      background-color: #ff6347;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      padding: 14px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: opacity 0.2s;
+    }
+
+    nav a:hover {
+      opacity: 0.75;
+    }
+
+    /* MAIN */
+    main {
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    /* SECTION TITLE */
+    .section-title {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 30px;
+      color: #c0392b;
+    }
+
+    /* CARDS GRID */
+    .cats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 28px;
+      margin-bottom: 60px;
+    }
+
+    .cat-card {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+
+    .cat-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 10px 28px rgba(0,0,0,0.15);
+    }
+
+    .cat-emoji {
+      font-size: 5rem;
+      background: #fff3ee;
+      width: 100%;
+      text-align: center;
+      padding: 30px 0;
+    }
+
+    .cat-info {
+      padding: 20px;
+    }
+
+    .cat-info h3 {
+      font-size: 1.4rem;
+      margin-bottom: 6px;
+      color: #e74c3c;
+    }
+
+    .cat-info .badge {
+      display: inline-block;
+      background: #ffebd8;
+      color: #c0392b;
+      border-radius: 20px;
+      padding: 3px 12px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .cat-info p {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: #555;
+      margin-bottom: 16px;
+    }
+
+    .btn-adopt {
+      display: block;
+      width: 100%;
+      background: linear-gradient(135deg, #ff8c69, #ff6347);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 12px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    .btn-adopt:hover {
+      opacity: 0.85;
+    }
+
+    /* HOW TO ADOPT */
+    #como-adoptar {
+      background: white;
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+      margin-bottom: 60px;
+    }
+
+    #como-adoptar h2 {
+      text-align: center;
+      font-size: 2rem;
+      color: #c0392b;
+      margin-bottom: 30px;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 24px;
+    }
+
+    .step {
+      text-align: center;
+      padding: 20px 10px;
+    }
+
+    .step-icon {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+
+    .step h4 {
+      color: #e74c3c;
+      margin-bottom: 8px;
+      font-size: 1.1rem;
+    }
+
+    .step p {
+      font-size: 0.9rem;
+      color: #666;
+      line-height: 1.5;
+    }
+
+    /* CONTACT */
+    #contacto {
+      background: linear-gradient(135deg, #ff8c69, #ff6347);
+      border-radius: 20px;
+      padding: 50px 40px;
+      text-align: center;
+      color: white;
+      margin-bottom: 60px;
+    }
+
+    #contacto h2 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    #contacto p {
+      font-size: 1.1rem;
+      margin-bottom: 24px;
+      opacity: 0.9;
+    }
+
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+      border: none;
+      border-radius: 10px;
+      padding: 14px 16px;
+      font-size: 1rem;
+      outline: none;
+      font-family: inherit;
+    }
+
+    .contact-form textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .contact-form button {
+      background: white;
+      color: #ff6347;
+      border: none;
+      border-radius: 10px;
+      padding: 14px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .contact-form button:hover {
+      background: #fff3ee;
+    }
+
+    /* FOOTER */
+    footer {
+      background: #333;
+      color: #ccc;
+      text-align: center;
+      padding: 24px;
+      font-size: 0.9rem;
+    }
+
+    footer span {
+      color: #ff8c69;
+    }
+
+    /* MODAL */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 999;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal {
+      background: white;
+      border-radius: 20px;
+      padding: 40px;
+      max-width: 420px;
+      width: 90%;
+      text-align: center;
+      position: relative;
+    }
+
+    .modal .modal-emoji {
+      font-size: 4rem;
+      margin-bottom: 10px;
+    }
+
+    .modal h3 {
+      font-size: 1.6rem;
+      color: #e74c3c;
+      margin-bottom: 10px;
+    }
+
+    .modal p {
+      color: #555;
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 14px;
+      right: 18px;
+      font-size: 1.4rem;
+      cursor: pointer;
+      color: #aaa;
+      background: none;
+      border: none;
+    }
+
+    .modal-close:hover {
+      color: #333;
+    }
+
+    .btn-modal-adopt {
+      background: linear-gradient(135deg, #ff8c69, #ff6347);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 12px 28px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      margin-right: 10px;
+    }
+
+    .btn-modal-cancel {
+      background: #eee;
+      color: #555;
+      border: none;
+      border-radius: 10px;
+      padding: 12px 28px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    @media (max-width: 600px) {
+      header h1 { font-size: 2rem; }
+      nav { gap: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <h1>🐾 Gatos en Adopción</h1>
+    <p>Dale un hogar lleno de amor a un gatito que te espera</p>
+  </header>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#gatos">Nuestros Gatos</a>
+    <a href="#como-adoptar">Cómo Adoptar</a>
+    <a href="#contacto">Contacto</a>
+  </nav>
+
+  <!-- MAIN -->
+  <main>
+
+    <!-- CATS SECTION -->
+    <section id="gatos">
+      <h2 class="section-title">🐱 Conoce a Nuestros Gatitos</h2>
+      <div class="cats-grid">
+
+        <div class="cat-card">
+          <div class="cat-emoji">🐈</div>
+          <div class="cat-info">
+            <h3>Mochi</h3>
+            <span class="badge">2 años · Hembra</span>
+            <p>Mochi es una gatita juguetona y cariñosa. Le encanta acurrucarse y ronronear. Está vacunada y esterilizada.</p>
+            <button class="btn-adopt" onclick="openModal('Mochi','🐈','2 años · Hembra')">¡Quiero adoptarla!</button>
+          </div>
+        </div>
+
+        <div class="cat-card">
+          <div class="cat-emoji">🐱</div>
+          <div class="cat-info">
+            <h3>Simba</h3>
+            <span class="badge">1 año · Macho</span>
+            <p>Simba es curioso y aventurero. Es muy sociable con personas y otros animales. Vacunado y castrado.</p>
+            <button class="btn-adopt" onclick="openModal('Simba','🐱','1 año · Macho')">¡Quiero adoptarlo!</button>
+          </div>
+        </div>
+
+        <div class="cat-card">
+          <div class="cat-emoji">🐈‍⬛</div>
+          <div class="cat-info">
+            <h3>Luna</h3>
+            <span class="badge">3 años · Hembra</span>
+            <p>Luna es tranquila y elegante. Le gusta el silencio y los mimos suaves. Perfecta para hogares tranquilos.</p>
+            <button class="btn-adopt" onclick="openModal('Luna','🐈‍⬛','3 años · Hembra')">¡Quiero adoptarla!</button>
+          </div>
+        </div>
+
+        <div class="cat-card">
+          <div class="cat-emoji">😺</div>
+          <div class="cat-info">
+            <h3>Naranja</h3>
+            <span class="badge">6 meses · Macho</span>
+            <p>Naranja es un gatito bebé lleno de energía. Le encanta jugar con todo lo que encuentra. ¡Listo para crecer contigo!</p>
+            <button class="btn-adopt" onclick="openModal('Naranja','😺','6 meses · Macho')">¡Quiero adoptarlo!</button>
+          </div>
+        </div>
+
+        <div class="cat-card">
+          <div class="cat-emoji">🙀</div>
+          <div class="cat-info">
+            <h3>Fantasma</h3>
+            <span class="badge">4 años · Macho</span>
+            <p>Fantasma es tímido al principio pero muy leal una vez que confía. Necesita paciencia y amor. ¡Vale la pena!</p>
+            <button class="btn-adopt" onclick="openModal('Fantasma','🙀','4 años · Macho')">¡Quiero adoptarlo!</button>
+          </div>
+        </div>
+
+        <div class="cat-card">
+          <div class="cat-emoji">😸</div>
+          <div class="cat-info">
+            <h3>Canela</h3>
+            <span class="badge">2 años · Hembra</span>
+            <p>Canela es una gatita sociable y muy expresiva. Adora la compañía humana y se lleva bien con niños.</p>
+            <button class="btn-adopt" onclick="openModal('Canela','😸','2 años · Hembra')">¡Quiero adoptarla!</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- HOW TO ADOPT -->
+    <section id="como-adoptar">
+      <h2>¿Cómo Adoptar?</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-icon">📋</div>
+          <h4>1. Completa el formulario</h4>
+          <p>Llena el formulario de adopción con tus datos y cuéntanos sobre tu hogar.</p>
+        </div>
+        <div class="step">
+          <div class="step-icon">📞</div>
+          <h4>2. Te contactamos</h4>
+          <p>Nuestro equipo te contactará en 24–48 horas para coordinar una visita.</p>
+        </div>
+        <div class="step">
+          <div class="step-icon">🏠</div>
+          <h4>3. Visita al refugio</h4>
+          <p>Ven a conocer al gatito en persona y asegúrate de que haya conexión.</p>
+        </div>
+        <div class="step">
+          <div class="step-icon">❤️</div>
+          <h4>4. ¡Llévalo a casa!</h4>
+          <p>Firma el acuerdo de adopción responsable y dale su nuevo hogar.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contacto">
+      <h2>¿Tienes preguntas?</h2>
+      <p>Escríbenos y te responderemos lo antes posible 🐾</p>
+      <form class="contact-form" onsubmit="handleSubmit(event)">
+        <input type="text" placeholder="Tu nombre" required />
+        <input type="email" placeholder="Tu correo electrónico" required />
+        <textarea placeholder="¿En qué podemos ayudarte?"></textarea>
+        <button type="submit">Enviar mensaje 💌</button>
+      </form>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>Hecho con <span>❤️</span> por el Refugio de Gatos &nbsp;|&nbsp; 2026 &nbsp;|&nbsp; Todos los gatitos merecen un hogar 🐾</p>
+  </footer>
+
+  <!-- MODAL -->
+  <div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <div class="modal-emoji" id="modalEmoji"></div>
+      <h3 id="modalName"></h3>
+      <p id="modalBadge" style="color:#e74c3c; font-weight:600; margin-bottom:10px;"></p>
+      <p>¡Qué buena elección! Para completar la adopción, ve a la sección de <strong>Contacto</strong> y envíanos un mensaje indicando el nombre del gatito. Te responderemos pronto 🐱</p>
+      <div>
+        <button class="btn-modal-adopt" onclick="scrollToContact()">Ir a Contacto</button>
+        <button class="btn-modal-cancel" onclick="closeModal()">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function openModal(name, emoji, badge) {
+      document.getElementById('modalName').textContent = name;
+      document.getElementById('modalEmoji').textContent = emoji;
+      document.getElementById('modalBadge').textContent = badge;
+      document.getElementById('modalOverlay').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('modalOverlay').classList.remove('active');
+    }
+
+    function closeModalOutside(e) {
+      if (e.target === document.getElementById('modalOverlay')) closeModal();
+    }
+
+    function scrollToContact() {
+      closeModal();
+      document.getElementById('contacto').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function handleSubmit(e) {
+      e.preventDefault();
+      alert('¡Mensaje enviado! Te contactaremos pronto 🐾');
+      e.target.reset();
+    }
+  </script>
+
+</body>
+</html>
