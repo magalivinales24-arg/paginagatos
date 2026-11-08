@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🐱 Contacto – Gatos en Adopción</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #fdf6f0;
+      color: #333;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* HEADER */
+    header {
+      background: linear-gradient(135deg, #56ab2f, #2d7a27);
+      color: white;
+      text-align: center;
+      padding: 50px 20px 40px;
+    }
+
+    header h1 {
+      font-size: 3rem;
+      margin-bottom: 10px;
+    }
+
+    header p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+    }
+
+    /* NAV */
+    nav {
+      background-color: #2d7a27;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      padding: 14px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: opacity 0.2s;
+    }
+
+    nav a:hover {
+      opacity: 0.75;
+    }
+
+    nav a.active {
+      border-bottom: 2px solid white;
+      padding-bottom: 2px;
+    }
+
+    /* MAIN */
+    main {
+      flex: 1;
+      max-width: 680px;
+      margin: 60px auto;
+      padding: 0 20px;
+      width: 100%;
+    }
+
+    .contact-box {
+      background: white;
+      border-radius: 20px;
+      padding: 50px 44px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.10);
+    }
+
+    .contact-box h2 {
+      font-size: 2rem;
+      color: #2d7a27;
+      margin-bottom: 8px;
+      text-align: center;
+    }
+
+    .contact-box .subtitle {
+      text-align: center;
+      color: #666;
+      margin-bottom: 36px;
+      font-size: 1rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: #444;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      border: 2px solid #d9f0d3;
+      border-radius: 10px;
+      padding: 12px 14px;
+      font-size: 1rem;
+      outline: none;
+      font-family: inherit;
+      transition: border-color 0.2s;
+      background: #fafff9;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      border-color: #56ab2f;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .btn-submit {
+      display: block;
+      width: 100%;
+      background: linear-gradient(135deg, #56ab2f, #2d7a27);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 14px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      margin-top: 10px;
+    }
+
+    .btn-submit:hover {
+      opacity: 0.85;
+    }
+
+    /* INFO CARDS */
+    .info-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 16px;
+      margin-top: 40px;
+    }
+
+    .info-card {
+      background: #eaf7e5;
+      border-radius: 14px;
+      padding: 20px 16px;
+      text-align: center;
+    }
+
+    .info-card .icon {
+      font-size: 2rem;
+      margin-bottom: 8px;
+    }
+
+    .info-card h4 {
+      color: #2d7a27;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+    }
+
+    .info-card p {
+      color: #555;
+      font-size: 0.85rem;
+    }
+
+    /* SUCCESS MESSAGE */
+    .success-msg {
+      display: none;
+      background: #eaf7e5;
+      border: 2px solid #56ab2f;
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      color: #2d7a27;
+      font-weight: 600;
+      font-size: 1.1rem;
+      margin-top: 20px;
+    }
+
+    /* FOOTER */
+    footer {
+      background: #333;
+      color: #ccc;
+      text-align: center;
+      padding: 24px;
+      font-size: 0.9rem;
+    }
+
+    footer span {
+      color: #56ab2f;
+    }
+
+    @media (max-width: 600px) {
+      header h1 { font-size: 2rem; }
+      .contact-box { padding: 30px 20px; }
+      nav { gap: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <h1>🐾 Gatos en Adopción</h1>
+    <p>Dale un hogar lleno de amor a un gatito que te espera</p>
+  </header>
+
+  <!-- NAV -->
+  <nav>
+    <a href="index.html">Nuestros Gatos</a>
+    <a href="index.html#como-adoptar">Cómo Adoptar</a>
+    <a href="contacto.html" class="active">Contacto</a>
+  </nav>
+
+  <!-- MAIN -->
+  <main>
+    <div class="contact-box">
+      <h2>¿Tienes preguntas? 🐱</h2>
+      <p class="subtitle">Escríbenos y te responderemos lo antes posible 🐾</p>
+
+      <form id="contactForm" onsubmit="handleSubmit(event)">
+        <div class="form-group">
+          <label for="nombre">Tu nombre</label>
+          <input type="text" id="nombre" placeholder="Ej: María González" required />
+        </div>
+
+        <div class="form-group">
+          <label for="email">Correo electrónico</label>
+          <input type="email" id="email" placeholder="tu@correo.com" required />
+        </div>
+
+        <div class="form-group">
+          <label for="telefono">Teléfono (opcional)</label>
+          <input type="tel" id="telefono" placeholder="+54 11 1234-5678" />
+        </div>
+
+        <div class="form-group">
+          <label for="motivo">Motivo del mensaje</label>
+          <select id="motivo">
+            <option value="">Selecciona una opción...</option>
+            <option value="adopcion">Quiero adoptar un gato</option>
+            <option value="info">Información general</option>
+            <option value="donacion">Quiero hacer una donación</option>
+            <option value="otro">Otro</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="mensaje">Mensaje</label>
+          <textarea id="mensaje" placeholder="¿En qué podemos ayudarte?"></textarea>
+        </div>
+
+        <button type="submit" class="btn-submit">Enviar mensaje 💌</button>
+      </form>
+
+      <div class="success-msg" id="successMsg">
+        ✅ ¡Mensaje enviado con éxito! Te responderemos pronto 🐾
+      </div>
+
+      <!-- INFO CARDS -->
+      <div class="info-cards">
+        <div class="info-card">
+          <div class="icon">📍</div>
+          <h4>Ubicación</h4>
+          <p>Refugio Patitas Verdes, Buenos Aires</p>
+        </div>
+        <div class="info-card">
+          <div class="icon">🕐</div>
+          <h4>Horario</h4>
+          <p>Lun–Vie: 9:00 a 18:00</p>
+        </div>
+        <div class="info-card">
+          <div class="icon">📧</div>
+          <h4>Email</h4>
+          <p>info@gatosadopcion.com</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>Hecho con <span>❤️</span> por el Refugio de Gatos &nbsp;|&nbsp; 2026 &nbsp;|&nbsp; Todos los gatitos merecen un hogar 🐾</p>
+  </footer>
+
+  <script>
+    function handleSubmit(e) {
+      e.preventDefault();
+      document.getElementById('contactForm').style.display = 'none';
+      document.getElementById('successMsg').style.display = 'block';
+    }
+  </script>
+
+</body>
+</html>
