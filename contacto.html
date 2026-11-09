@@ -3,311 +3,263 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>🐱 Contacto – Gatos en Adopción</title>
+  <title>Contacto – MichiHogar</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+    :root {
+      --green:       #3a7d44;
+      --green-light: #56ab2f;
+      --green-pale:  #eaf7ee;
+      --green-mid:   #c8e6c9;
+      --bg:          #f4f9f4;
+      --text:        #1e2d1f;
+      --text-soft:   #5a6b5b;
     }
 
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #fdf6f0;
-      color: #333;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+      font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+      background:var(--bg); color:var(--text);
+      min-height:100vh; display:flex; flex-direction:column;
     }
 
-    /* HEADER */
-    header {
-      background: linear-gradient(135deg, #56ab2f, #2d7a27);
-      color: white;
-      text-align: center;
-      padding: 50px 20px 40px;
+    /* ── NAVBAR ── */
+    .navbar {
+      position:sticky; top:0; z-index:100;
+      background:rgba(255,255,255,.92);
+      backdrop-filter:blur(10px);
+      border-bottom:1px solid var(--green-mid);
+      padding:0 48px;
+      display:flex; align-items:center; justify-content:space-between;
+      height:68px;
+    }
+    .navbar-logo {
+      display:flex; align-items:center; gap:10px;
+      text-decoration:none; color:var(--green);
+    }
+    .navbar-logo svg { width:40px; height:40px; }
+    .navbar-logo span { font-size:1.4rem; font-weight:800; letter-spacing:-.5px; }
+    .navbar-links { display:flex; gap:28px; list-style:none; }
+    .navbar-links a {
+      text-decoration:none; color:var(--text-soft); font-weight:600; font-size:.95rem;
+      transition:color .2s;
+    }
+    .navbar-links a:hover, .navbar-links a.active { color:var(--green); }
+    .btn-nav {
+      background:var(--green); color:#fff;
+      border:none; border-radius:30px;
+      padding:9px 22px; font-size:.9rem; font-weight:700;
+      cursor:pointer; text-decoration:none;
     }
 
-    header h1 {
-      font-size: 3rem;
-      margin-bottom: 10px;
+    /* ── HERO MINI ── */
+    .hero-mini {
+      background:linear-gradient(135deg, var(--green-light), var(--green));
+      color:white; text-align:center; padding:60px 20px 50px;
     }
+    .hero-mini h1 { font-size:2.4rem; font-weight:900; margin-bottom:10px; }
+    .hero-mini p  { font-size:1.1rem; opacity:.9; }
 
-    header p {
-      font-size: 1.2rem;
-      opacity: 0.9;
-    }
-
-    /* NAV */
-    nav {
-      background-color: #2d7a27;
-      display: flex;
-      justify-content: center;
-      gap: 30px;
-      padding: 14px;
-    }
-
-    nav a {
-      color: white;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 1rem;
-      transition: opacity 0.2s;
-    }
-
-    nav a:hover {
-      opacity: 0.75;
-    }
-
-    nav a.active {
-      border-bottom: 2px solid white;
-      padding-bottom: 2px;
-    }
-
-    /* MAIN */
+    /* ── MAIN ── */
     main {
-      flex: 1;
-      max-width: 680px;
-      margin: 60px auto;
-      padding: 0 20px;
-      width: 100%;
+      flex:1; max-width:680px;
+      margin:50px auto; padding:0 20px; width:100%;
     }
 
     .contact-box {
-      background: white;
-      border-radius: 20px;
-      padding: 50px 44px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.10);
+      background:white; border-radius:20px;
+      padding:50px 44px;
+      box-shadow:0 4px 20px rgba(0,0,0,.10);
     }
-
     .contact-box h2 {
-      font-size: 2rem;
-      color: #2d7a27;
-      margin-bottom: 8px;
-      text-align: center;
+      font-size:1.8rem; color:var(--green);
+      margin-bottom:6px; text-align:center;
     }
-
     .contact-box .subtitle {
-      text-align: center;
-      color: #666;
-      margin-bottom: 36px;
-      font-size: 1rem;
+      text-align:center; color:var(--text-soft);
+      margin-bottom:36px; font-size:1rem;
     }
 
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      margin-bottom: 20px;
-    }
-
-    .form-group label {
-      font-weight: 600;
-      font-size: 0.95rem;
-      color: #444;
-    }
-
+    .form-group { display:flex; flex-direction:column; gap:6px; margin-bottom:20px; }
+    .form-group label { font-weight:600; font-size:.95rem; color:#444; }
     .form-group input,
     .form-group textarea,
     .form-group select {
-      border: 2px solid #d9f0d3;
-      border-radius: 10px;
-      padding: 12px 14px;
-      font-size: 1rem;
-      outline: none;
-      font-family: inherit;
-      transition: border-color 0.2s;
-      background: #fafff9;
+      border:2px solid var(--green-mid);
+      border-radius:10px; padding:12px 14px;
+      font-size:1rem; outline:none; font-family:inherit;
+      transition:border-color .2s; background:#fafff9;
     }
-
     .form-group input:focus,
     .form-group textarea:focus,
-    .form-group select:focus {
-      border-color: #56ab2f;
-    }
-
-    .form-group textarea {
-      resize: vertical;
-      min-height: 120px;
-    }
+    .form-group select:focus { border-color:var(--green-light); }
+    .form-group textarea { resize:vertical; min-height:120px; }
 
     .btn-submit {
-      display: block;
-      width: 100%;
-      background: linear-gradient(135deg, #56ab2f, #2d7a27);
-      color: white;
-      border: none;
-      border-radius: 10px;
-      padding: 14px;
-      font-size: 1.05rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: opacity 0.2s;
-      margin-top: 10px;
+      display:block; width:100%;
+      background:linear-gradient(135deg, var(--green-light), var(--green));
+      color:white; border:none; border-radius:10px;
+      padding:14px; font-size:1.05rem; font-weight:700;
+      cursor:pointer; transition:opacity .2s; margin-top:10px;
     }
+    .btn-submit:hover { opacity:.85; }
 
-    .btn-submit:hover {
-      opacity: 0.85;
-    }
-
-    /* INFO CARDS */
     .info-cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-      gap: 16px;
-      margin-top: 40px;
+      display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+      gap:16px; margin-top:40px;
     }
-
     .info-card {
-      background: #eaf7e5;
-      border-radius: 14px;
-      padding: 20px 16px;
-      text-align: center;
+      background:var(--green-pale); border-radius:14px;
+      padding:20px 16px; text-align:center;
     }
+    .info-card .icon { font-size:2rem; margin-bottom:8px; }
+    .info-card h4 { color:var(--green); font-size:.95rem; margin-bottom:4px; }
+    .info-card p  { color:var(--text-soft); font-size:.85rem; }
 
-    .info-card .icon {
-      font-size: 2rem;
-      margin-bottom: 8px;
-    }
-
-    .info-card h4 {
-      color: #2d7a27;
-      font-size: 0.95rem;
-      margin-bottom: 4px;
-    }
-
-    .info-card p {
-      color: #555;
-      font-size: 0.85rem;
-    }
-
-    /* SUCCESS MESSAGE */
     .success-msg {
-      display: none;
-      background: #eaf7e5;
-      border: 2px solid #56ab2f;
-      border-radius: 12px;
-      padding: 20px;
-      text-align: center;
-      color: #2d7a27;
-      font-weight: 600;
-      font-size: 1.1rem;
-      margin-top: 20px;
+      display:none;
+      background:var(--green-pale);
+      border:2px solid var(--green-light);
+      border-radius:12px; padding:24px;
+      text-align:center; color:var(--green);
+      font-weight:600; font-size:1.1rem; margin-top:20px;
     }
 
-    /* FOOTER */
     footer {
-      background: #333;
-      color: #ccc;
-      text-align: center;
-      padding: 24px;
-      font-size: 0.9rem;
+      background:#1e2d1f; color:#ccc;
+      text-align:center; padding:28px; font-size:.9rem;
     }
+    footer span { color:var(--green-light); }
 
-    footer span {
-      color: #56ab2f;
-    }
-
-    @media (max-width: 600px) {
-      header h1 { font-size: 2rem; }
-      .contact-box { padding: 30px 20px; }
-      nav { gap: 16px; }
+    @media(max-width:600px){
+      .navbar { padding:0 16px; }
+      .navbar-links { display:none; }
+      .contact-box { padding:30px 20px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- HEADER -->
-  <header>
-    <h1>🐾 Gatos en Adopción</h1>
-    <p>Dale un hogar lleno de amor a un gatito que te espera</p>
-  </header>
+<!-- ── NAVBAR ── -->
+<nav class="navbar">
+  <a class="navbar-logo" href="index.html">
+    <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="40" cy="40" r="40" fill="#eaf7ee"/>
+      <ellipse cx="40" cy="44" rx="22" ry="20" fill="#3a7d44"/>
+      <polygon points="20,30 14,14 30,26" fill="#3a7d44"/>
+      <polygon points="60,30 66,14 50,26" fill="#3a7d44"/>
+      <polygon points="21,28 17,17 29,26" fill="#a8e6b4"/>
+      <polygon points="59,28 63,17 51,26" fill="#a8e6b4"/>
+      <ellipse cx="40" cy="45" rx="17" ry="15" fill="#56ab2f"/>
+      <ellipse cx="33" cy="41" rx="4" ry="4.5" fill="white"/>
+      <ellipse cx="47" cy="41" rx="4" ry="4.5" fill="white"/>
+      <circle cx="33" cy="41" r="2.5" fill="#1e2d1f"/>
+      <circle cx="47" cy="41" r="2.5" fill="#1e2d1f"/>
+      <circle cx="34" cy="40" r=".9" fill="white"/>
+      <circle cx="48" cy="40" r=".9" fill="white"/>
+      <polygon points="40,46 38,49 42,49" fill="#ff8fab"/>
+      <path d="M38,49 Q40,52 42,49" stroke="#1e2d1f" stroke-width="1" fill="none" stroke-linecap="round"/>
+      <line x1="23" y1="47" x2="34" y2="48" stroke="white" stroke-width="1.2" stroke-linecap="round"/>
+      <line x1="23" y1="50" x2="34" y2="50" stroke="white" stroke-width="1.2" stroke-linecap="round"/>
+      <line x1="46" y1="48" x2="57" y2="47" stroke="white" stroke-width="1.2" stroke-linecap="round"/>
+      <line x1="46" y1="50" x2="57" y2="50" stroke="white" stroke-width="1.2" stroke-linecap="round"/>
+    </svg>
+    <span>MichiHogar</span>
+  </a>
 
-  <!-- NAV -->
-  <nav>
-    <a href="index.html">Nuestros Gatos</a>
-    <a href="index.html#como-adoptar">Cómo Adoptar</a>
-    <a href="contacto.html" class="active">Contacto</a>
-  </nav>
+  <ul class="navbar-links">
+    <li><a href="index.html">Inicio</a></li>
+    <li><a href="index.html#gatos">Gatos</a></li>
+    <li><a href="index.html#como-adoptar">Adoptar</a></li>
+    <li><a href="contacto.html" class="active">Contacto</a></li>
+  </ul>
 
-  <!-- MAIN -->
-  <main>
-    <div class="contact-box">
-      <h2>¿Tienes preguntas? 🐱</h2>
-      <p class="subtitle">Escríbenos y te responderemos lo antes posible 🐾</p>
+  <a href="contacto.html" class="btn-nav">🐾 Contáctanos</a>
+</nav>
 
-      <form id="contactForm" onsubmit="handleSubmit(event)">
-        <div class="form-group">
-          <label for="nombre">Tu nombre</label>
-          <input type="text" id="nombre" placeholder="Ej: María González" required />
-        </div>
+<!-- ── HERO MINI ── -->
+<div class="hero-mini">
+  <h1>¿Tienes preguntas? 🐱</h1>
+  <p>Escríbenos y te responderemos lo antes posible</p>
+</div>
 
-        <div class="form-group">
-          <label for="email">Correo electrónico</label>
-          <input type="email" id="email" placeholder="tu@correo.com" required />
-        </div>
+<!-- ── MAIN ── -->
+<main>
+  <div class="contact-box">
+    <h2>Contáctanos</h2>
+    <p class="subtitle">Estamos aquí para ayudarte a encontrar tu compañero perfecto 🐾</p>
 
-        <div class="form-group">
-          <label for="telefono">Teléfono (opcional)</label>
-          <input type="tel" id="telefono" placeholder="+54 11 1234-5678" />
-        </div>
-
-        <div class="form-group">
-          <label for="motivo">Motivo del mensaje</label>
-          <select id="motivo">
-            <option value="">Selecciona una opción...</option>
-            <option value="adopcion">Quiero adoptar un gato</option>
-            <option value="info">Información general</option>
-            <option value="donacion">Quiero hacer una donación</option>
-            <option value="otro">Otro</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="mensaje">Mensaje</label>
-          <textarea id="mensaje" placeholder="¿En qué podemos ayudarte?"></textarea>
-        </div>
-
-        <button type="submit" class="btn-submit">Enviar mensaje 💌</button>
-      </form>
-
-      <div class="success-msg" id="successMsg">
-        ✅ ¡Mensaje enviado con éxito! Te responderemos pronto 🐾
+    <form id="contactForm" onsubmit="handleSubmit(event)">
+      <div class="form-group">
+        <label for="nombre">Tu nombre</label>
+        <input type="text" id="nombre" placeholder="Ej: María González" required />
       </div>
 
-      <!-- INFO CARDS -->
-      <div class="info-cards">
-        <div class="info-card">
-          <div class="icon">📍</div>
-          <h4>Ubicación</h4>
-          <p>Refugio Patitas Verdes, Buenos Aires</p>
-        </div>
-        <div class="info-card">
-          <div class="icon">🕐</div>
-          <h4>Horario</h4>
-          <p>Lun–Vie: 9:00 a 18:00</p>
-        </div>
-        <div class="info-card">
-          <div class="icon">📧</div>
-          <h4>Email</h4>
-          <p>info@gatosadopcion.com</p>
-        </div>
+      <div class="form-group">
+        <label for="email">Correo electrónico</label>
+        <input type="email" id="email" placeholder="tu@correo.com" required />
+      </div>
+
+      <div class="form-group">
+        <label for="telefono">Teléfono (opcional)</label>
+        <input type="tel" id="telefono" placeholder="+54 11 1234-5678" />
+      </div>
+
+      <div class="form-group">
+        <label for="motivo">Motivo del mensaje</label>
+        <select id="motivo">
+          <option value="">Selecciona una opción...</option>
+          <option value="adopcion">Quiero adoptar un gato</option>
+          <option value="info">Información general</option>
+          <option value="donacion">Quiero hacer una donación</option>
+          <option value="otro">Otro</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="mensaje">Mensaje</label>
+        <textarea id="mensaje" placeholder="¿En qué podemos ayudarte?"></textarea>
+      </div>
+
+      <button type="submit" class="btn-submit">Enviar mensaje 💌</button>
+    </form>
+
+    <div class="success-msg" id="successMsg">
+      ✅ ¡Mensaje enviado con éxito! Te responderemos pronto 🐾
+    </div>
+
+    <div class="info-cards">
+      <div class="info-card">
+        <div class="icon">📍</div>
+        <h4>Ubicación</h4>
+        <p>Refugio MichiHogar, Buenos Aires</p>
+      </div>
+      <div class="info-card">
+        <div class="icon">🕐</div>
+        <h4>Horario</h4>
+        <p>Lun–Vie: 9:00 a 18:00</p>
+      </div>
+      <div class="info-card">
+        <div class="icon">📧</div>
+        <h4>Email</h4>
+        <p>info@michihogar.com</p>
       </div>
     </div>
-  </main>
+  </div>
+</main>
 
-  <!-- FOOTER -->
-  <footer>
-    <p>Hecho con <span>❤️</span> por el Refugio de Gatos &nbsp;|&nbsp; 2026 &nbsp;|&nbsp; Todos los gatitos merecen un hogar 🐾</p>
-  </footer>
+<!-- ── FOOTER ── -->
+<footer>
+  <p>Hecho con <span>❤️</span> por <strong style="color:#a8e6b4">MichiHogar</strong> &nbsp;|&nbsp; 2026 &nbsp;|&nbsp; Todos los gatitos merecen un hogar 🐾</p>
+</footer>
 
-  <script>
-    function handleSubmit(e) {
-      e.preventDefault();
-      document.getElementById('contactForm').style.display = 'none';
-      document.getElementById('successMsg').style.display = 'block';
-    }
-  </script>
+<script>
+  function handleSubmit(e) {
+    e.preventDefault();
+    document.getElementById('contactForm').style.display = 'none';
+    document.getElementById('successMsg').style.display = 'block';
+  }
+</script>
 
 </body>
 </html>

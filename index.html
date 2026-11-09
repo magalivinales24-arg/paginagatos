@@ -3,454 +3,642 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>🐱 Gatos en Adopción</title>
+  <title>MichiHogar – Gatos en Adopción</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+    :root {
+      --green:       #3a7d44;
+      --green-light: #56ab2f;
+      --green-pale:  #eaf7ee;
+      --green-mid:   #c8e6c9;
+      --bg:          #f4f9f4;
+      --text:        #1e2d1f;
+      --text-soft:   #5a6b5b;
+      --white:       #ffffff;
+      --radius:      14px;
+      --shadow:      0 4px 24px rgba(0,0,0,.10);
     }
 
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #fdf6f0;
-      color: #333;
-    }
+    body { font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; background:var(--bg); color:var(--text); }
 
-    /* HEADER */
-    header {
-      background: linear-gradient(135deg, #56ab2f, #2d7a27);
-      color: white;
-      text-align: center;
-      padding: 50px 20px 40px;
+    /* ── NAVBAR ── */
+    .navbar {
+      position:sticky; top:0; z-index:100;
+      background:rgba(255,255,255,.92);
+      backdrop-filter:blur(10px);
+      border-bottom:1px solid var(--green-mid);
+      padding:0 48px;
+      display:flex; align-items:center; justify-content:space-between;
+      height:68px;
     }
-
-    header h1 {
-      font-size: 3rem;
-      margin-bottom: 10px;
-      letter-spacing: 1px;
+    .navbar-logo {
+      display:flex; align-items:center; gap:10px;
+      text-decoration:none; color:var(--green);
     }
+    .navbar-logo svg { width:40px; height:40px; }
+    .navbar-logo span { font-size:1.4rem; font-weight:800; letter-spacing:-.5px; }
 
-    header p {
-      font-size: 1.2rem;
-      opacity: 0.9;
+    .navbar-links { display:flex; gap:28px; list-style:none; }
+    .navbar-links a {
+      text-decoration:none; color:var(--text-soft); font-weight:600; font-size:.95rem;
+      transition:color .2s;
     }
+    .navbar-links a:hover, .navbar-links a.active { color:var(--green); }
 
-    /* NAV */
-    nav {
-      background-color: #2d7a27;
-      display: flex;
-      justify-content: center;
-      gap: 30px;
-      padding: 14px;
+    .navbar-actions { display:flex; align-items:center; gap:14px; }
+    .btn-nav {
+      background:var(--green); color:#fff;
+      border:none; border-radius:30px;
+      padding:9px 22px; font-size:.9rem; font-weight:700;
+      cursor:pointer; transition:opacity .2s; text-decoration:none;
     }
+    .btn-nav:hover { opacity:.85; }
 
-    nav a {
-      color: white;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 1rem;
-      transition: opacity 0.2s;
+    /* ── HERO ── */
+    .hero {
+      position:relative; height:520px; overflow:hidden;
     }
-
-    nav a:hover {
-      opacity: 0.75;
+    .hero-img {
+      width:100%; height:100%; object-fit:cover; object-position:center 30%;
+      display:block;
     }
-
-    /* MAIN */
-    main {
-      max-width: 1100px;
-      margin: 40px auto;
-      padding: 0 20px;
+    .hero-overlay {
+      position:absolute; inset:0;
+      background:linear-gradient(to right, rgba(20,50,20,.65) 40%, rgba(0,0,0,.10));
+      display:flex; align-items:center;
+      padding:0 80px;
     }
-
-    /* SECTION TITLE */
-    .section-title {
-      text-align: center;
-      font-size: 2rem;
-      margin-bottom: 30px;
-      color: #2d7a27;
+    .hero-content { max-width:520px; color:#fff; }
+    .hero-tag {
+      display:inline-block;
+      background:rgba(255,255,255,.18); border:1px solid rgba(255,255,255,.4);
+      border-radius:30px; padding:5px 16px; font-size:.8rem; font-weight:600;
+      margin-bottom:18px; backdrop-filter:blur(6px);
     }
+    .hero-content h1 {
+      font-size:3rem; line-height:1.15; font-weight:900; margin-bottom:16px;
+    }
+    .hero-content p {
+      font-size:1.1rem; opacity:.9; margin-bottom:28px; line-height:1.6;
+    }
+    .btn-hero {
+      background:var(--green-light); color:#fff;
+      border:none; border-radius:30px;
+      padding:14px 32px; font-size:1rem; font-weight:700;
+      cursor:pointer; transition:transform .2s, opacity .2s;
+    }
+    .btn-hero:hover { transform:translateY(-2px); opacity:.9; }
 
-    /* CARDS GRID */
+    /* ── SEARCH BAR ── */
+    .search-wrapper {
+      display:flex; justify-content:center;
+      margin-top:-30px; position:relative; z-index:10;
+      padding:0 24px;
+    }
+    .search-bar {
+      background:#fff; border-radius:50px;
+      box-shadow:var(--shadow);
+      display:flex; align-items:center; gap:0;
+      padding:8px 10px 8px 24px;
+      width:100%; max-width:720px;
+    }
+    .search-bar input {
+      flex:1; border:none; outline:none;
+      font-size:1rem; color:var(--text);
+      background:transparent; min-width:0;
+    }
+    .search-bar input::placeholder { color:#aaa; }
+    .search-divider { width:1px; height:28px; background:var(--green-mid); margin:0 14px; flex-shrink:0; }
+    .search-select {
+      border:none; outline:none; font-size:.95rem; color:var(--text-soft);
+      background:transparent; cursor:pointer; padding-right:8px;
+    }
+    .btn-search {
+      background:var(--green); color:#fff;
+      border:none; border-radius:30px;
+      padding:10px 24px; font-size:.95rem; font-weight:700;
+      cursor:pointer; transition:opacity .2s; flex-shrink:0;
+    }
+    .btn-search:hover { opacity:.85; }
+
+    /* ── MAIN WRAPPER ── */
+    .container { max-width:1140px; margin:0 auto; padding:0 24px; }
+
+    /* ── WELCOME SECTION ── */
+    .welcome { padding:72px 0 60px; }
+    .welcome-inner {
+      display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;
+    }
+    .welcome-text h2 { font-size:2rem; color:var(--green); margin-bottom:14px; font-weight:800; }
+    .welcome-text p { font-size:1rem; color:var(--text-soft); line-height:1.75; margin-bottom:18px; }
+    .welcome-stats {
+      display:flex; gap:28px; margin-top:24px;
+    }
+    .stat { text-align:center; }
+    .stat .num { font-size:1.8rem; font-weight:800; color:var(--green); }
+    .stat .lbl { font-size:.8rem; color:var(--text-soft); font-weight:600; }
+    .btn-secondary {
+      display:inline-block; margin-top:28px;
+      background:var(--green-pale); color:var(--green);
+      border:2px solid var(--green); border-radius:30px;
+      padding:11px 28px; font-size:.95rem; font-weight:700;
+      cursor:pointer; text-decoration:none; transition:background .2s;
+    }
+    .btn-secondary:hover { background:var(--green-mid); }
+
+    .welcome-img-wrap { position:relative; }
+    .welcome-img-wrap img {
+      width:100%; border-radius:24px;
+      object-fit:cover; height:380px;
+      box-shadow:var(--shadow);
+    }
+    .welcome-badge {
+      position:absolute; bottom:20px; left:20px;
+      background:#fff; border-radius:14px; padding:12px 16px;
+      box-shadow:0 4px 20px rgba(0,0,0,.12);
+      display:flex; align-items:center; gap:10px;
+    }
+    .welcome-badge .badge-icon { font-size:1.6rem; }
+    .welcome-badge .badge-text strong { display:block; color:var(--green); font-size:.95rem; }
+    .welcome-badge .badge-text span { font-size:.78rem; color:var(--text-soft); }
+
+    /* ── CATS SECTION ── */
+    .cats-section { padding:20px 0 80px; }
+    .cats-section h2 { font-size:1.9rem; font-weight:800; color:var(--text); margin-bottom:6px; }
+    .cats-section .sub { color:var(--text-soft); margin-bottom:36px; font-size:1rem; }
+
     .cats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 28px;
-      margin-bottom: 60px;
+      display:grid;
+      grid-template-columns:repeat(auto-fill, minmax(300px, 1fr));
+      gap:28px;
     }
-
     .cat-card {
-      background: white;
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.10);
-      transition: transform 0.25s, box-shadow 0.25s;
+      background:#fff; border-radius:var(--radius);
+      overflow:hidden; box-shadow:var(--shadow);
+      transition:transform .25s, box-shadow .25s;
+    }
+    .cat-card:hover { transform:translateY(-6px); box-shadow:0 12px 32px rgba(0,0,0,.14); }
+
+    .cat-card-img {
+      position:relative; overflow:hidden; height:220px;
+    }
+    .cat-card-img img {
+      width:100%; height:100%; object-fit:cover;
+      transition:transform .4s;
+    }
+    .cat-card:hover .cat-card-img img { transform:scale(1.05); }
+    .cat-badge {
+      position:absolute; top:12px; left:12px;
+      background:var(--green); color:#fff;
+      font-size:.75rem; font-weight:700; border-radius:20px;
+      padding:4px 12px;
     }
 
-    .cat-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 10px 28px rgba(0,0,0,0.15);
+    .cat-card-body { padding:18px 20px 22px; }
+    .cat-name { font-size:1.2rem; font-weight:800; margin-bottom:4px; }
+    .cat-meta {
+      display:flex; gap:8px; margin-bottom:12px; flex-wrap:wrap;
     }
-
-    .cat-emoji {
-      font-size: 5rem;
-      background: #eaf7e5;
-      width: 100%;
-      text-align: center;
-      padding: 30px 0;
+    .cat-tag {
+      background:var(--green-pale); color:var(--green);
+      font-size:.75rem; font-weight:600; border-radius:20px;
+      padding:3px 10px;
     }
-
-    .cat-info {
-      padding: 20px;
-    }
-
-    .cat-info h3 {
-      font-size: 1.4rem;
-      margin-bottom: 6px;
-      color: #2d7a27;
-    }
-
-    .cat-info .badge {
-      display: inline-block;
-      background: #d9f0d3;
-      color: #2d7a27;
-      border-radius: 20px;
-      padding: 3px 12px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      margin-bottom: 10px;
-    }
-
-    .cat-info p {
-      font-size: 0.95rem;
-      line-height: 1.6;
-      color: #555;
-      margin-bottom: 16px;
-    }
-
+    .cat-desc { font-size:.88rem; color:var(--text-soft); line-height:1.6; margin-bottom:16px; }
     .btn-adopt {
-      display: block;
-      width: 100%;
-      background: linear-gradient(135deg, #56ab2f, #2d7a27);
-      color: white;
-      border: none;
-      border-radius: 10px;
-      padding: 12px;
-      font-size: 1rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: opacity 0.2s;
+      width:100%;
+      background:linear-gradient(135deg, var(--green-light), var(--green));
+      color:#fff; border:none; border-radius:10px;
+      padding:11px; font-size:.95rem; font-weight:700;
+      cursor:pointer; transition:opacity .2s;
     }
+    .btn-adopt:hover { opacity:.85; }
 
-    .btn-adopt:hover {
-      opacity: 0.85;
+    /* ── HOW TO ADOPT ── */
+    .how-section {
+      background:#fff; padding:70px 0;
+      border-top:1px solid var(--green-mid);
+      border-bottom:1px solid var(--green-mid);
     }
-
-    /* HOW TO ADOPT */
-    #como-adoptar {
-      background: white;
-      border-radius: 20px;
-      padding: 40px;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-      margin-bottom: 60px;
+    .how-section h2 { font-size:1.9rem; font-weight:800; text-align:center; margin-bottom:48px; }
+    .steps-grid {
+      display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:32px;
     }
-
-    #como-adoptar h2 {
-      text-align: center;
-      font-size: 2rem;
-      color: #2d7a27;
-      margin-bottom: 30px;
+    .step { text-align:center; }
+    .step-circle {
+      width:72px; height:72px; border-radius:50%;
+      background:var(--green-pale); border:2px solid var(--green-mid);
+      display:flex; align-items:center; justify-content:center;
+      font-size:1.9rem; margin:0 auto 16px;
     }
+    .step h4 { font-size:1rem; font-weight:700; color:var(--green); margin-bottom:8px; }
+    .step p { font-size:.88rem; color:var(--text-soft); line-height:1.6; }
 
-    .steps {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 24px;
-    }
-
-    .step {
-      text-align: center;
-      padding: 20px 10px;
-    }
-
-    .step-icon {
-      font-size: 2.5rem;
-      margin-bottom: 10px;
-    }
-
-    .step h4 {
-      color: #2d7a27;
-      margin-bottom: 8px;
-      font-size: 1.1rem;
-    }
-
-    .step p {
-      font-size: 0.9rem;
-      color: #666;
-      line-height: 1.5;
-    }
-
-    /* FOOTER */
+    /* ── FOOTER ── */
     footer {
-      background: #333;
-      color: #ccc;
-      text-align: center;
-      padding: 24px;
-      font-size: 0.9rem;
+      background:#1e2d1f; color:#ccc;
+      text-align:center; padding:30px 24px;
+      font-size:.9rem;
     }
+    footer span { color:var(--green-light); }
 
-    footer span {
-      color: #56ab2f;
-    }
-
-    /* MODAL */
+    /* ── MODAL ── */
     .modal-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.5);
-      z-index: 999;
-      justify-content: center;
-      align-items: center;
+      display:none; position:fixed; inset:0;
+      background:rgba(0,0,0,.5); z-index:999;
+      justify-content:center; align-items:center;
     }
-
-    .modal-overlay.active {
-      display: flex;
-    }
-
+    .modal-overlay.active { display:flex; }
     .modal {
-      background: white;
-      border-radius: 20px;
-      padding: 40px;
-      max-width: 420px;
-      width: 90%;
-      text-align: center;
-      position: relative;
+      background:#fff; border-radius:20px;
+      padding:40px; max-width:420px; width:90%;
+      text-align:center; position:relative;
     }
-
-    .modal .modal-emoji {
-      font-size: 4rem;
-      margin-bottom: 10px;
+    .modal-img {
+      width:100%; height:200px; object-fit:cover;
+      border-radius:14px; margin-bottom:16px;
     }
-
-    .modal h3 {
-      font-size: 1.6rem;
-      color: #2d7a27;
-      margin-bottom: 10px;
-    }
-
-    .modal p {
-      color: #555;
-      margin-bottom: 24px;
-      line-height: 1.6;
-    }
-
+    .modal h3 { font-size:1.6rem; color:var(--green); margin-bottom:6px; }
+    .modal .modal-tags { display:flex; gap:8px; justify-content:center; margin-bottom:14px; flex-wrap:wrap; }
+    .modal p { color:var(--text-soft); margin-bottom:24px; line-height:1.6; font-size:.95rem; }
     .modal-close {
-      position: absolute;
-      top: 14px;
-      right: 18px;
-      font-size: 1.4rem;
-      cursor: pointer;
-      color: #aaa;
-      background: none;
-      border: none;
+      position:absolute; top:14px; right:18px;
+      font-size:1.4rem; cursor:pointer; color:#aaa;
+      background:none; border:none;
     }
-
-    .modal-close:hover {
-      color: #333;
-    }
-
+    .modal-close:hover { color:#333; }
     .btn-modal-adopt {
-      background: linear-gradient(135deg, #56ab2f, #2d7a27);
-      color: white;
-      border: none;
-      border-radius: 10px;
-      padding: 12px 28px;
-      font-size: 1rem;
-      font-weight: 700;
-      cursor: pointer;
-      margin-right: 10px;
+      background:linear-gradient(135deg,var(--green-light),var(--green));
+      color:#fff; border:none; border-radius:10px;
+      padding:12px 28px; font-size:1rem; font-weight:700;
+      cursor:pointer; margin-right:10px;
     }
-
     .btn-modal-cancel {
-      background: #eee;
-      color: #555;
-      border: none;
-      border-radius: 10px;
-      padding: 12px 28px;
-      font-size: 1rem;
-      cursor: pointer;
+      background:#eee; color:#555; border:none;
+      border-radius:10px; padding:12px 28px;
+      font-size:1rem; cursor:pointer;
     }
 
-    @media (max-width: 600px) {
-      header h1 { font-size: 2rem; }
-      nav { gap: 16px; }
+    @media(max-width:768px){
+      .navbar { padding:0 20px; }
+      .navbar-links { display:none; }
+      .hero-overlay { padding:0 32px; }
+      .hero-content h1 { font-size:2rem; }
+      .welcome-inner { grid-template-columns:1fr; }
+      .hero { height:400px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- HEADER -->
-  <header>
-    <h1>🐾 Gatos en Adopción</h1>
-    <p>Dale un hogar lleno de amor a un gatito que te espera</p>
-  </header>
+<!-- ── NAVBAR ── -->
+<nav class="navbar">
+  <a class="navbar-logo" href="index.html">
+    <!-- SVG Logo gato -->
+    <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="40" cy="40" r="40" fill="#eaf7ee"/>
+      <!-- Cabeza del gato -->
+      <ellipse cx="40" cy="44" rx="22" ry="20" fill="#3a7d44"/>
+      <!-- Orejas -->
+      <polygon points="20,30 14,14 30,26" fill="#3a7d44"/>
+      <polygon points="60,30 66,14 50,26" fill="#3a7d44"/>
+      <!-- Orejas internas (rosa) -->
+      <polygon points="21,28 17,17 29,26" fill="#a8e6b4"/>
+      <polygon points="59,28 63,17 51,26" fill="#a8e6b4"/>
+      <!-- Cara -->
+      <ellipse cx="40" cy="45" rx="17" ry="15" fill="#56ab2f"/>
+      <!-- Ojos -->
+      <ellipse cx="33" cy="41" rx="4" ry="4.5" fill="white"/>
+      <ellipse cx="47" cy="41" rx="4" ry="4.5" fill="white"/>
+      <circle cx="33" cy="41" r="2.5" fill="#1e2d1f"/>
+      <circle cx="47" cy="41" r="2.5" fill="#1e2d1f"/>
+      <circle cx="34" cy="40" r=".9" fill="white"/>
+      <circle cx="48" cy="40" r=".9" fill="white"/>
+      <!-- Nariz -->
+      <polygon points="40,46 38,49 42,49" fill="#ff8fab"/>
+      <!-- Boca -->
+      <path d="M38,49 Q40,52 42,49" stroke="#1e2d1f" stroke-width="1" fill="none" stroke-linecap="round"/>
+      <!-- Bigotes -->
+      <line x1="23" y1="47" x2="34" y2="48" stroke="white" stroke-width="1.2" stroke-linecap="round"/>
+      <line x1="23" y1="50" x2="34" y2="50" stroke="white" stroke-width="1.2" stroke-linecap="round"/>
+      <line x1="46" y1="48" x2="57" y2="47" stroke="white" stroke-width="1.2" stroke-linecap="round"/>
+      <line x1="46" y1="50" x2="57" y2="50" stroke="white" stroke-width="1.2" stroke-linecap="round"/>
+    </svg>
+    <span>MichiHogar</span>
+  </a>
 
-  <!-- NAV -->
-  <nav>
-    <a href="#gatos">Nuestros Gatos</a>
-    <a href="#como-adoptar">Cómo Adoptar</a>
-    <a href="contacto.html">Contacto</a>
-  </nav>
+  <ul class="navbar-links">
+    <li><a href="index.html" class="active">Inicio</a></li>
+    <li><a href="#gatos">Gatos</a></li>
+    <li><a href="#como-adoptar">Adoptar</a></li>
+    <li><a href="contacto.html">Contacto</a></li>
+  </ul>
 
-  <!-- MAIN -->
-  <main>
+  <div class="navbar-actions">
+    <a href="contacto.html" class="btn-nav">🐾 Contáctanos</a>
+  </div>
+</nav>
 
-    <!-- CATS SECTION -->
-    <section id="gatos">
-      <h2 class="section-title">🐱 Conoce a Nuestros Gatitos</h2>
-      <div class="cats-grid">
+<!-- ── HERO ── -->
+<section class="hero">
+  <img class="hero-img"
+    src="https://images.unsplash.com/photo-1495360010541-f48722b34f7d?w=1400&fit=crop&q=80"
+    alt="Gato adorable" />
+  <div class="hero-overlay">
+    <div class="hero-content">
+      <span class="hero-tag">🐱 Refugio de Gatos</span>
+      <h1>Encuentra a tu Compañero Perfecto</h1>
+      <p>Cientos de gatitos esperan un hogar lleno de amor. Adoptar es el acto más hermoso que puedes hacer.</p>
+      <button class="btn-hero" onclick="document.getElementById('gatos').scrollIntoView({behavior:'smooth'})">
+        Ver gatos en adopción
+      </button>
+    </div>
+  </div>
+</section>
 
-        <div class="cat-card">
-          <div class="cat-emoji">🐈</div>
-          <div class="cat-info">
-            <h3>Mochi</h3>
-            <span class="badge">2 años · Hembra</span>
-            <p>Mochi es una gatita juguetona y cariñosa. Le encanta acurrucarse y ronronear. Está vacunada y esterilizada.</p>
-            <button class="btn-adopt" onclick="openModal('Mochi','🐈','2 años · Hembra')">¡Quiero adoptarla!</button>
-          </div>
+<!-- ── SEARCH BAR ── -->
+<div class="search-wrapper">
+  <div class="search-bar">
+    <input type="text" placeholder="Buscar por nombre o raza..." id="searchInput" oninput="filterCats()" />
+    <div class="search-divider"></div>
+    <select class="search-select" id="filterAge" onchange="filterCats()">
+      <option value="">Cualquier edad</option>
+      <option value="cachorro">Cachorro</option>
+      <option value="joven">Joven (1–3 años)</option>
+      <option value="adulto">Adulto (+3 años)</option>
+    </select>
+    <div class="search-divider"></div>
+    <select class="search-select" id="filterSex" onchange="filterCats()">
+      <option value="">Hembra / Macho</option>
+      <option value="hembra">Hembra</option>
+      <option value="macho">Macho</option>
+    </select>
+    <button class="btn-search">Buscar</button>
+  </div>
+</div>
+
+<!-- ── MAIN ── -->
+<div class="container">
+
+  <!-- WELCOME -->
+  <section class="welcome">
+    <div class="welcome-inner">
+      <div class="welcome-text">
+        <h2>Bienvenido a MichiHogar 🏡</h2>
+        <p>Somos un refugio dedicado al rescate, cuidado y adopción responsable de gatos. Cada gatito que llega aquí recibe atención veterinaria, cariño y una segunda oportunidad de vida.</p>
+        <p>Creemos que cada gato merece un hogar y cada persona merece el amor incondicional de un felino.</p>
+        <div class="welcome-stats">
+          <div class="stat"><div class="num">240+</div><div class="lbl">Adoptados</div></div>
+          <div class="stat"><div class="num">48</div><div class="lbl">En espera</div></div>
+          <div class="stat"><div class="num">5★</div><div class="lbl">Valoración</div></div>
         </div>
-
-        <div class="cat-card">
-          <div class="cat-emoji">🐱</div>
-          <div class="cat-info">
-            <h3>Simba</h3>
-            <span class="badge">1 año · Macho</span>
-            <p>Simba es curioso y aventurero. Es muy sociable con personas y otros animales. Vacunado y castrado.</p>
-            <button class="btn-adopt" onclick="openModal('Simba','🐱','1 año · Macho')">¡Quiero adoptarlo!</button>
-          </div>
-        </div>
-
-        <div class="cat-card">
-          <div class="cat-emoji">🐈‍⬛</div>
-          <div class="cat-info">
-            <h3>Luna</h3>
-            <span class="badge">3 años · Hembra</span>
-            <p>Luna es tranquila y elegante. Le gusta el silencio y los mimos suaves. Perfecta para hogares tranquilos.</p>
-            <button class="btn-adopt" onclick="openModal('Luna','🐈‍⬛','3 años · Hembra')">¡Quiero adoptarla!</button>
-          </div>
-        </div>
-
-        <div class="cat-card">
-          <div class="cat-emoji">😺</div>
-          <div class="cat-info">
-            <h3>Naranja</h3>
-            <span class="badge">6 meses · Macho</span>
-            <p>Naranja es un gatito bebé lleno de energía. Le encanta jugar con todo lo que encuentra. ¡Listo para crecer contigo!</p>
-            <button class="btn-adopt" onclick="openModal('Naranja','😺','6 meses · Macho')">¡Quiero adoptarlo!</button>
-          </div>
-        </div>
-
-        <div class="cat-card">
-          <div class="cat-emoji">🙀</div>
-          <div class="cat-info">
-            <h3>Fantasma</h3>
-            <span class="badge">4 años · Macho</span>
-            <p>Fantasma es tímido al principio pero muy leal una vez que confía. Necesita paciencia y amor. ¡Vale la pena!</p>
-            <button class="btn-adopt" onclick="openModal('Fantasma','🙀','4 años · Macho')">¡Quiero adoptarlo!</button>
-          </div>
-        </div>
-
-        <div class="cat-card">
-          <div class="cat-emoji">😸</div>
-          <div class="cat-info">
-            <h3>Canela</h3>
-            <span class="badge">2 años · Hembra</span>
-            <p>Canela es una gatita sociable y muy expresiva. Adora la compañía humana y se lleva bien con niños.</p>
-            <button class="btn-adopt" onclick="openModal('Canela','😸','2 años · Hembra')">¡Quiero adoptarla!</button>
-          </div>
-        </div>
-
+        <a href="contacto.html" class="btn-secondary">Conoce más →</a>
       </div>
-    </section>
 
-    <!-- HOW TO ADOPT -->
-    <section id="como-adoptar">
-      <h2>¿Cómo Adoptar?</h2>
-      <div class="steps">
-        <div class="step">
-          <div class="step-icon">📋</div>
-          <h4>1. Completa el formulario</h4>
-          <p>Llena el formulario de adopción con tus datos y cuéntanos sobre tu hogar.</p>
-        </div>
-        <div class="step">
-          <div class="step-icon">📞</div>
-          <h4>2. Te contactamos</h4>
-          <p>Nuestro equipo te contactará en 24–48 horas para coordinar una visita.</p>
-        </div>
-        <div class="step">
-          <div class="step-icon">🏠</div>
-          <h4>3. Visita al refugio</h4>
-          <p>Ven a conocer al gatito en persona y asegúrate de que haya conexión.</p>
-        </div>
-        <div class="step">
-          <div class="step-icon">❤️</div>
-          <h4>4. ¡Llévalo a casa!</h4>
-          <p>Firma el acuerdo de adopción responsable y dale su nuevo hogar.</p>
+      <div class="welcome-img-wrap">
+        <img src="https://images.unsplash.com/photo-1543852786-1cf6624b9987?w=700&h=500&fit=crop&q=80" alt="Gato feliz" />
+        <div class="welcome-badge">
+          <div class="badge-icon">🏅</div>
+          <div class="badge-text">
+            <strong>Refugio Certificado</strong>
+            <span>Desde 2018 · Buenos Aires</span>
+          </div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-  </main>
+  <!-- CATS SECTION -->
+  <section class="cats-section" id="gatos">
+    <h2>Gatos en Adopción 🐾</h2>
+    <p class="sub">Estos gatitos te están esperando — ¿cuál te roba el corazón?</p>
 
-  <!-- FOOTER -->
-  <footer>
-    <p>Hecho con <span>❤️</span> por el Refugio de Gatos &nbsp;|&nbsp; 2026 &nbsp;|&nbsp; Todos los gatitos merecen un hogar 🐾</p>
-  </footer>
+    <div class="cats-grid" id="catsGrid">
 
-  <!-- MODAL -->
-  <div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
-    <div class="modal">
-      <button class="modal-close" onclick="closeModal()">✕</button>
-      <div class="modal-emoji" id="modalEmoji"></div>
-      <h3 id="modalName"></h3>
-      <p id="modalBadge" style="color:#2d7a27; font-weight:600; margin-bottom:10px;"></p>
-      <p>¡Qué buena elección! Para completar la adopción, ve a la sección de <strong>Contacto</strong> y envíanos un mensaje indicando el nombre del gatito. Te responderemos pronto 🐱</p>
-      <div>
-        <button class="btn-modal-adopt" onclick="scrollToContact()">Ir a Contacto</button>
-        <button class="btn-modal-cancel" onclick="closeModal()">Cerrar</button>
+      <div class="cat-card"
+           data-name="mochi" data-age="joven" data-sex="hembra"
+           data-img="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=600&h=400&fit=crop&q=80"
+           data-desc="Mochi es una gatita juguetona y cariñosa. Le encanta acurrucarse y ronronear. Está vacunada y esterilizada.">
+        <div class="cat-card-img">
+          <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=600&h=400&fit=crop&q=80" alt="Mochi" loading="lazy"/>
+          <span class="cat-badge">Disponible</span>
+        </div>
+        <div class="cat-card-body">
+          <div class="cat-name">Mochi</div>
+          <div class="cat-meta">
+            <span class="cat-tag">2 años</span>
+            <span class="cat-tag">Hembra</span>
+            <span class="cat-tag">Esterilizada</span>
+          </div>
+          <p class="cat-desc">Juguetona y cariñosa. Le encanta acurrucarse y ronronear por las noches.</p>
+          <button class="btn-adopt" onclick="openModal(this.closest('.cat-card'))">¡Quiero adoptarla!</button>
+        </div>
+      </div>
+
+      <div class="cat-card"
+           data-name="simba" data-age="cachorro" data-sex="macho"
+           data-img="https://images.unsplash.com/photo-1529778873920-4da4926a72c2?w=600&h=400&fit=crop&q=80"
+           data-desc="Simba es un cachorro curioso y aventurero. Es muy sociable con personas. Vacunado.">
+        <div class="cat-card-img">
+          <img src="https://images.unsplash.com/photo-1529778873920-4da4926a72c2?w=600&h=400&fit=crop&q=80" alt="Simba" loading="lazy"/>
+          <span class="cat-badge">Disponible</span>
+        </div>
+        <div class="cat-card-body">
+          <div class="cat-name">Simba</div>
+          <div class="cat-meta">
+            <span class="cat-tag">6 meses</span>
+            <span class="cat-tag">Macho</span>
+            <span class="cat-tag">Vacunado</span>
+          </div>
+          <p class="cat-desc">Curioso y aventurero. Muy sociable, se lleva bien con niños y otros animales.</p>
+          <button class="btn-adopt" onclick="openModal(this.closest('.cat-card'))">¡Quiero adoptarlo!</button>
+        </div>
+      </div>
+
+      <div class="cat-card"
+           data-name="luna" data-age="adulto" data-sex="hembra"
+           data-img="https://images.unsplash.com/photo-1573865526739-10659fec78a5?w=600&h=400&fit=crop&q=80"
+           data-desc="Luna es tranquila y elegante. Perfecta para hogares tranquilos. Esterilizada y vacunada.">
+        <div class="cat-card-img">
+          <img src="https://images.unsplash.com/photo-1573865526739-10659fec78a5?w=600&h=400&fit=crop&q=80" alt="Luna" loading="lazy"/>
+          <span class="cat-badge">Disponible</span>
+        </div>
+        <div class="cat-card-body">
+          <div class="cat-name">Luna</div>
+          <div class="cat-meta">
+            <span class="cat-tag">3 años</span>
+            <span class="cat-tag">Hembra</span>
+            <span class="cat-tag">Tranquila</span>
+          </div>
+          <p class="cat-desc">Elegante y serena. Le gustan los espacios tranquilos y los mimos suaves.</p>
+          <button class="btn-adopt" onclick="openModal(this.closest('.cat-card'))">¡Quiero adoptarla!</button>
+        </div>
+      </div>
+
+      <div class="cat-card"
+           data-name="naranja" data-age="cachorro" data-sex="macho"
+           data-img="https://images.unsplash.com/photo-1555685812-4b943f1cb0eb?w=600&h=400&fit=crop&q=80"
+           data-desc="Naranja es un gatito bebé lleno de energía. Listo para crecer contigo. Vacunado.">
+        <div class="cat-card-img">
+          <img src="https://images.unsplash.com/photo-1555685812-4b943f1cb0eb?w=600&h=400&fit=crop&q=80" alt="Naranja" loading="lazy"/>
+          <span class="cat-badge">Disponible</span>
+        </div>
+        <div class="cat-card-body">
+          <div class="cat-name">Naranja</div>
+          <div class="cat-meta">
+            <span class="cat-tag">4 meses</span>
+            <span class="cat-tag">Macho</span>
+            <span class="cat-tag">Juguetón</span>
+          </div>
+          <p class="cat-desc">Un cachorro lleno de energía y ternura. ¡Listo para crecer a tu lado!</p>
+          <button class="btn-adopt" onclick="openModal(this.closest('.cat-card'))">¡Quiero adoptarlo!</button>
+        </div>
+      </div>
+
+      <div class="cat-card"
+           data-name="fantasma" data-age="adulto" data-sex="macho"
+           data-img="https://images.unsplash.com/photo-1548802673-380ab8ebc7b7?w=600&h=400&fit=crop&q=80"
+           data-desc="Fantasma es tímido al principio pero muy leal una vez que confía. Castrado y vacunado.">
+        <div class="cat-card-img">
+          <img src="https://images.unsplash.com/photo-1548802673-380ab8ebc7b7?w=600&h=400&fit=crop&q=80" alt="Fantasma" loading="lazy"/>
+          <span class="cat-badge">Disponible</span>
+        </div>
+        <div class="cat-card-body">
+          <div class="cat-name">Fantasma</div>
+          <div class="cat-meta">
+            <span class="cat-tag">4 años</span>
+            <span class="cat-tag">Macho</span>
+            <span class="cat-tag">Leal</span>
+          </div>
+          <p class="cat-desc">Tímido al inicio, pero una vez que confía te da un amor incondicional.</p>
+          <button class="btn-adopt" onclick="openModal(this.closest('.cat-card'))">¡Quiero adoptarlo!</button>
+        </div>
+      </div>
+
+      <div class="cat-card"
+           data-name="canela" data-age="joven" data-sex="hembra"
+           data-img="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=600&h=400&fit=crop&q=80"
+           data-desc="Canela es muy sociable y expresiva. Adora la compañía humana y se lleva bien con todos.">
+        <div class="cat-card-img">
+          <img src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=600&h=400&fit=crop&q=80" alt="Canela" loading="lazy"/>
+          <span class="cat-badge">Disponible</span>
+        </div>
+        <div class="cat-card-body">
+          <div class="cat-name">Canela</div>
+          <div class="cat-meta">
+            <span class="cat-tag">2 años</span>
+            <span class="cat-tag">Hembra</span>
+            <span class="cat-tag">Sociable</span>
+          </div>
+          <p class="cat-desc">Expresiva y cariñosa. Adora la compañía humana y se lleva bien con niños.</p>
+          <button class="btn-adopt" onclick="openModal(this.closest('.cat-card'))">¡Quiero adoptarla!</button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</div><!-- /container -->
+
+<!-- ── HOW TO ADOPT ── -->
+<section class="how-section" id="como-adoptar">
+  <div class="container">
+    <h2>¿Cómo Adoptar? 🐾</h2>
+    <div class="steps-grid">
+      <div class="step">
+        <div class="step-circle">📋</div>
+        <h4>1. Completa el formulario</h4>
+        <p>Cuéntanos sobre tu hogar y por qué quieres adoptar.</p>
+      </div>
+      <div class="step">
+        <div class="step-circle">📞</div>
+        <h4>2. Te contactamos</h4>
+        <p>Nuestro equipo te llama en 24–48 horas para coordinar.</p>
+      </div>
+      <div class="step">
+        <div class="step-circle">🏠</div>
+        <h4>3. Visita al refugio</h4>
+        <p>Conoce al gatito en persona y asegúrate de que haya conexión.</p>
+      </div>
+      <div class="step">
+        <div class="step-circle">❤️</div>
+        <h4>4. ¡Llévalo a casa!</h4>
+        <p>Firma el acuerdo y dale a tu nuevo compañero su hogar.</p>
       </div>
     </div>
   </div>
+</section>
 
-  <script>
-    function openModal(name, emoji, badge) {
-      document.getElementById('modalName').textContent = name;
-      document.getElementById('modalEmoji').textContent = emoji;
-      document.getElementById('modalBadge').textContent = badge;
-      document.getElementById('modalOverlay').classList.add('active');
-    }
+<!-- ── FOOTER ── -->
+<footer>
+  <p>Hecho con <span>❤️</span> por <strong style="color:#a8e6b4">MichiHogar</strong> &nbsp;|&nbsp; 2026 &nbsp;|&nbsp; Todos los gatitos merecen un hogar 🐾</p>
+</footer>
 
-    function closeModal() {
-      document.getElementById('modalOverlay').classList.remove('active');
-    }
+<!-- ── MODAL ── -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <img class="modal-img" id="modalImg" src="" alt="" />
+    <h3 id="modalName"></h3>
+    <div class="modal-tags" id="modalTags"></div>
+    <p id="modalDesc"></p>
+    <div>
+      <button class="btn-modal-adopt" onclick="scrollToContact()">Ir a Contacto</button>
+      <button class="btn-modal-cancel" onclick="closeModal()">Cerrar</button>
+    </div>
+  </div>
+</div>
 
-    function closeModalOutside(e) {
-      if (e.target === document.getElementById('modalOverlay')) closeModal();
-    }
+<script>
+  function openModal(card) {
+    const img   = card.querySelector('.cat-card-img img').src;
+    const name  = card.querySelector('.cat-name').textContent;
+    const tags  = Array.from(card.querySelectorAll('.cat-tag')).map(t => t.textContent);
+    const desc  = card.dataset.desc;
 
-    function scrollToContact() {
-      closeModal();
-      document.getElementById('contacto').scrollIntoView({ behavior: 'smooth' });
-    }
+    document.getElementById('modalImg').src = img;
+    document.getElementById('modalImg').alt = name;
+    document.getElementById('modalName').textContent = name;
+    document.getElementById('modalDesc').textContent = desc;
 
-    function handleSubmit(e) {
-      e.preventDefault();
-      alert('¡Mensaje enviado! Te contactaremos pronto 🐾');
-      e.target.reset();
-    }
-  </script>
+    const tagsEl = document.getElementById('modalTags');
+    tagsEl.innerHTML = tags.map(t => `<span class="cat-tag">${t}</span>`).join('');
+
+    document.getElementById('modalOverlay').classList.add('active');
+  }
+
+  function closeModal() {
+    document.getElementById('modalOverlay').classList.remove('active');
+  }
+
+  function closeModalOutside(e) {
+    if (e.target === document.getElementById('modalOverlay')) closeModal();
+  }
+
+  function scrollToContact() {
+    closeModal();
+    window.location.href = 'contacto.html';
+  }
+
+  function filterCats() {
+    const query  = document.getElementById('searchInput').value.toLowerCase();
+    const age    = document.getElementById('filterAge').value;
+    const sex    = document.getElementById('filterSex').value;
+
+    document.querySelectorAll('.cat-card').forEach(card => {
+      const name   = card.dataset.name;
+      const cardAge = card.dataset.age;
+      const cardSex = card.dataset.sex;
+
+      const matchName = !query || name.includes(query);
+      const matchAge  = !age  || cardAge === age;
+      const matchSex  = !sex  || cardSex === sex;
+
+      card.style.display = (matchName && matchAge && matchSex) ? '' : 'none';
+    });
+  }
+</script>
 
 </body>
 </html>
